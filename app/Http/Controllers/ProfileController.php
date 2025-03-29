@@ -28,3 +28,24 @@ class ProfileController extends Controller
         'layout' => $layout
     ]);
 }
+
+
+    public function update(ProfileUpdateRequest $request)
+    {
+        $user = $request->user();
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('profiles', 'public');
+            $data['image'] = $path;
+        }
+
+        if ($user->email !== $data['email']) {
+            $user->email_verified_at = null;
+        }
+
+        $user->fill($data)->save();
+
+        return Redirect::route('profile.edit')->with('status', 'Profile updated successfully!');
+    }
+}
