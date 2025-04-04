@@ -168,3 +168,99 @@ class OrderManager extends Controller
 
         return view('userpage.orders', compact('orders'));
     }
+
+    public function viewReceipt($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+        return view('emails.payment_receipt', compact('order'));
+    }
+
+    public function sendPaymentReceipt($order)
+    {
+        try {
+            Mail::to(Auth::user()->email)->send(new PaymentReceiptMail($order));
+            \Log::info('Payment receipt email sent to:', ['email' => Auth::user()->email]);
+        } catch (\Exception $e) {
+            \Log::error('Failed to send email:', ['error' => $e->getMessage()]);
+        }
+    }
+
+    public function confirmOrderByVendor($orderId)
+    {
+        $order = Order::where('id', $orderId)
+                      ->where('vendor_id', Auth::id())
+                      ->where('status', 'paid_pending_vendor')
+                      ->first();
+
+        if (!$order) {
+            return back()->with('error', 'Order not found or already confirmed.');
+        }
+
+        $order->status = 'paid_confirmed';
+        $order->save();
+
+        Mail::to($order->user->email)->send(new VendorConfirmedMail($order));
+
+        return back()->with('success', 'Order has been confirmed successfully.');
+    }
+
+    //  NEW: Cancel Order by User
+    public function cancelOrderByUser($orderId)
+    {
+        $order = Order::findOrFail($orderId);
+    
+        if ($order->status == 'paid_pending_vendor') {
+            // Update order status to cancelled
+            $order->status = 'cancelled_by_user';
+            $order->save();
+    
+            // Notify the user about the cancellation
+            if (Auth::check()) {
+                Auth::user()->notify(new OrderCancelledNotification($order));
+            } else {
+                return redirect()->route('login')->with('error', 'You must be logged in to cancel the order.');
+            }
+    
+            // Optionally, you can notify the vendor as well
+            if ($order->vendor) {
+                $order->vendor->notify(new OrderCancelledNotification($order));
+            } else {
+                \Log::warning('Order has no associated vendor', ['order_id' => $order->id]);
+            }
+    
+            return redirect()->route('user.orders')->with('success', 'Order has been cancelled successfully.');
+        }
+    
+        return redirect()->route('user.orders')->with('error', 'Order cannot be cancelled at this stage.');
+    }
+    
+
+    //  NEW: Cancel Order by Vendor
+    public function cancelOrderByVendor($orderId)
+    {
+        $order = Order::where('id', $orderId)
+                      ->where('vendor_id', Auth::id())
+                      ->where('status', 'paid_pending_vendor')
+                      ->first();
+
+        if (!$order) {
+            return back()->with('error', 'Order cannot be cancelled.');
+        }
+
+        $order->status = 'cancelled_by_vendor';
+        $order->save();
+
+        // Notify user and admins
+        $user = User::find($order->user_id);
+        if ($user) {
+            $user->notify(new OrderCancelledNotification($order));
+        }
+
+        $admins = User::where('role', 'admin')->get();
+        foreach ($admins as $admin) {
+            $admin->notify(new OrderCancelledNotification($order));
+        }
+
+        return back()->with('success', 'Order cancelled successfully.');
+    }
+}
