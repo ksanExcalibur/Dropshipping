@@ -122,3 +122,19 @@ Route::middleware(['auth', 'user'])->group(function () {
 
 
 
+
+
+Route::get('/chat', function () {
+    return view('chat.index'); // points to resources/views/chat/index.blade.php
+})->middleware('auth')->name('chat.index');
+
+Route::get('/notifications', [NotificationController::class, 'index'])
+    ->name('notifications.index')
+    ->middleware('auth');
+
+    Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])
+    ->name('notifications.read')
+    ->middleware('auth');
+    Route::get('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])
+    ->name('notifications.markAllRead')
+    ->middleware('auth');
