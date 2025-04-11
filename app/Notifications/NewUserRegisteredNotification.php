@@ -14,4 +14,23 @@ class NewUserRegisteredNotification extends Notification
 
     protected $user;
 
-    
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
+    public function via($notifiable)
+    {
+        return ['database'];
+    }
+
+    public function toDatabase($notifiable)
+    {
+        return [
+            'message' => "New user registered: {$this->user->name}",
+            'user_id' => $this->user->id,
+            'user_name' => $this->user->name,
+            
+        ];
+    }
+}
