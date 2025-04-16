@@ -9,7 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-  
+    public function up()
+    {
+        Schema::create('messages', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('from_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('to_id')->constrained('users')->onDelete('cascade');
+            $table->text('message');
+            $table->timestamps();
+        });
+    }
     
 
     /**
