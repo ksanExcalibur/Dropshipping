@@ -29,3 +29,45 @@ class ChatComponent extends Component
             ->pluck('id')
             ->toArray();
     }
+
+    public function loadMessages($userId)
+    {
+        if (!in_array($userId, $this->userIds)) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $this->selectedUser = $userId;
+
+        $this->messages = Message::with(['from', 'to'])
+            ->where(function ($query) use ($userId) {
+                $query->where([
+                    'from_id' => Auth::id(),
+                    'to_id' => $userId
+                ]);
+            })
+            ->orWhere(function ($query) use ($userId) {
+                $query->where([
+                    'from_id' => $userId,
+                    'to_id' => Auth::id()
+                ]);
+            })
+            ->latest()
+            ->get()
+            ->map(function ($message) {
+                return [
+                    'id' => $message->id,
+                    'from_id' => $message->from_id,
+                    'from_name' => $message->from->name,
+                    'to_id' => $message->to_id,
+                    'message' => $message->message,
+                    'created_at' => $message->created_at->format('h:i A'),
+                    'is_me' => $message->from_id == Auth::id()
+                ];
+            })
+            ->toArray();
+
+        $this->dispatch('messages-updated');
+    }
+   
+    }
+}
