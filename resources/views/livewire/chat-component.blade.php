@@ -54,3 +54,29 @@
     </form>
     @endif
 </div>
+<script>
+document.addEventListener('livewire:init', function() {
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '{{ config('services.pusher.key') }}',
+        cluster: '{{ config('services.pusher.cluster') }}',
+        encrypted: true,
+        authEndpoint: '/broadcasting/auth'
+    });
+
+    Echo.private('chat.{{ auth()->id() }}')
+        .listen('.message.sent', (data) => {
+            Livewire.dispatch('newMessage', {
+                from_id: data.message.from_id,
+                to_id: data.message.to_id
+            });
+        });
+
+    Livewire.on('messages-updated', () => {
+        const chatBox = document.getElementById('chatBox');
+        setTimeout(() => {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 50);
+    });
+});
+</script>

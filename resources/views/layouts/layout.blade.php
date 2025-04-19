@@ -12,13 +12,6 @@
     <link rel="stylesheet" href="{{ asset('css/story.css') }}">
     <link rel="stylesheet" href="{{ asset('css/product-details.css') }}">
 
-    @livewireStyles
-
-    
-  </head>
-  <body>
-  @livewireScripts
-
     @include('include.header')
     <div class="container">
       @yield('content')

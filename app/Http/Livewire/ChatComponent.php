@@ -68,6 +68,31 @@ class ChatComponent extends Component
 
         $this->dispatch('messages-updated');
     }
-   
+    public function sendMessage()
+    {
+        $this->validate([
+            'message' => 'required|string|max:500',
+            'selectedUser' => ['required', Rule::in($this->userIds)]
+        ]);
+    
+        $message = Message::create([
+            'from_id' => Auth::id(),
+            'to_id' => $this->selectedUser,
+            'message' => $this->message,
+        ]);
+    
+        broadcast(new MessageSent([
+            'id' => $message->id,
+            'from_id' => $message->from_id,
+            'from_name' => Auth::user()->name, // Add sender's name
+            'to_id' => $message->to_id,
+            'message' => $message->message,
+            'created_at' => $message->created_at->format('h:i A')
+        ]));
+    
+        $this->reset('message');
+        $this->loadMessages($this->selectedUser);
+    }
+
     }
 }
