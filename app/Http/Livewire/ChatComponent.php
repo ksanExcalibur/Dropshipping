@@ -94,5 +94,17 @@ class ChatComponent extends Component
         $this->loadMessages($this->selectedUser);
     }
 
+    public function handleNewMessage($messageData)
+    {
+        if (in_array($this->selectedUser, [$messageData['from_id'], $messageData['to_id']])) {
+            $this->loadMessages($this->selectedUser);
+        }
+    }
+
+    public function render()
+    {
+        return view('livewire.chat-component', [
+            'users' => User::findMany($this->userIds)
+        ]);
     }
 }
