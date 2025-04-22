@@ -51,27 +51,4 @@
                             </span>
                         </td>
                         <td>
-                            <a href="{{ route('orders.receipt', $order->id) }}" class="btn btn-primary btn-sm mb-1">View Receipt</a>
-
-                            @if($order->status == 'paid_pending_vendor' && Auth::user()->isVendor())
-                                <!-- Show Confirm and Cancel buttons for vendors with paid_pending_vendor orders -->
-                                <form action="{{ route('vendor.orders.confirm', $order->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-success btn-sm">Confirm Order</button>
-                                </form>
-
-                                <form action="{{ route('vendor.orders.cancel', $order->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger btn-sm">Cancel Order</button>
-                                </form>
-                            @elseif($order->status == 'paid_confirmed')
-                                <span class="text-success">Confirmed</span>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @endif
-</div>
 @endsection
