@@ -151,6 +151,15 @@ class ProductController extends Controller
         $cartItems = Cart::where('user_id', Auth::id())->with('product')->get();
         return view('backend.cart', compact('cartItems'));
     }
-
+// Remove from Cart
+public function removeFromCart($id)
+{
+    $cartItem = Cart::where('user_id', Auth::id())->where('id', $id)->first();
+    if ($cartItem) {
+        $cartItem->delete();
+        return redirect()->back()->with('success', 'Product removed from cart successfully');
+    }
+    return redirect()->back()->with('error', 'Product not found in cart');
+}
     
 }
