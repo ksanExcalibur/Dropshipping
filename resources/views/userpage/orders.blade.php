@@ -1,4 +1,3 @@
-<!-- resources/views/userpage/orders.blade.php -->
 @extends('layouts.user-layout')
 
 @section('title', 'My Orders')
@@ -33,13 +32,21 @@
                         <span class="badge
                             @if($order->status == 'pending') bg-warning
                             @elseif($order->status == 'paid') bg-success
+                            @elseif($order->status == 'paid_pending_vendor') bg-info
                             @else bg-secondary @endif">
-                            {{ ucfirst($order->status) }}
+                            {{ ucfirst(str_replace('_', ' ', $order->status)) }}
                         </span>
                     </td>
                     <td>
-                       <a href="{{ route('orders.receipt', $order->id) }}" class="btn btn-primary btn-sm">View Receipt</a>
-
+                        @if($order->status == 'paid_pending_vendor')
+                            <form action="{{ route('order.cancel', $order->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" class="btn btn-danger btn-sm">Cancel</button>
+                            </form>
+                        @else
+                            <a href="{{ route('orders.receipt', $order->id) }}" class="btn btn-primary btn-sm">View Receipt</a>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<head>
+  <title>Pusher Test</title>
+  <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+    #messages { border: 1px solid #ddd; padding: 10px; height: 300px; overflow-y: scroll; margin-bottom: 10px; }
+    input, button { padding: 8px; margin-right: 5px; }
+    .status { margin-bottom: 10px; padding: 8px; border-radius: 4px; }
+    .connected { background: #d4edda; color: #155724; }
+    .disconnected { background: #f8d7da; color: #721c24; }
+    .message { margin: 5px 0; padding: 8px; background: #f8f9fa; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Pusher Test</h1>
+  <div id="status" class="status disconnected">Disconnected</div>
+  <div id="messages"></div>
+  <input type="text" id="message" placeholder="Type your message">
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('c753b0ffdca89f0a3c85', {
+      cluster: 'ap2',
+      authEndpoint: '/broadcasting/auth'
+    });
+    
+    // Connection status callbacks
+    pusher.connection.bind('state_change', function(states) {
+      const statusEl = document.getElementById('status');
+      statusEl.className = 'status ' + states.current;
+      statusEl.textContent = states.current.charAt(0).toUpperCase() + states.current.slice(1);
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString();
+      document.getElementById('messages').innerHTML += 
+        `<div class="message">
+          <small>${timeStr}</small><br>
+          ${data.message}
+        </div>`;
+      // Auto-scroll to bottom
+      document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+    });
+
+    function sendMessage() {
+      const message = document.getElementById('message').value;
+      if (message.trim() === '') return;
+      
+      // In a real app, you would send this to your server first
+      // For testing, we'll just broadcast directly
+      channel.trigger('client-my-event', { message: message });
+      document.getElementById('message').value = '';
+    }
+  </script>
+</body>

@@ -14,8 +14,10 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Category</th>
                 <th>Qty</th>
                 <th>Price</th>
+                 <th>Description</th>
                 <th>Image</th>
                 <th>Actions</th>
             </tr>
@@ -24,8 +26,10 @@
             @foreach($products as $product)
             <tr>
                 <td>{{ $product->name }}</td>
+                <td>{{ $product->category ? $product->category->name : 'Uncategorized' }}</td>
                 <td>{{ $product->qty }}</td>
-                <td>${{ $product->price }}</td>
+                <td>Rs {{ $product->price }}</td>
+                <td>{{ $product->description }}</td>
                 <td>
                     @if($product->image)
                         <img src="{{ asset('storage/' . $product->image) }}" width="50">

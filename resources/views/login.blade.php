@@ -34,6 +34,9 @@
             <label class="form-check-label" for="exampleCheck1">Check me out</label>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="mt-3">
+            <a href="{{ route('password.request') }}" class="text-decoration-none">Forgot Password?</a>
+        </div>
     </form>
     </div>
 @endsection

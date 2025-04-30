@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600">
+  <style>
+    .primary { fill: #7b2cbf; }
+    .secondary { fill: #4cc9f0; }
+    .accent { fill: #e0fbfc; }
+    .dark { fill: #0d1b2a; }
+    .gradient-bg { fill: url(#gradient-bg); }
+    .glow { filter: url(#glow); }
+  </style>
+  
+  <defs>
+    <linearGradient id="gradient-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d1b2a" />
+      <stop offset="100%" stop-color="#3a0ca3" />
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="600" class="gradient-bg" />
+  
+  <!-- Grid lines -->
+  <g opacity="0.2">
+    <line x1="0" y1="100" x2="1200" y2="100" stroke="#4cc9f0" stroke-width="1" />
+    <line x1="0" y1="200" x2="1200" y2="200" stroke="#4cc9f0" stroke-width="1" />
+    <line x1="0" y1="300" x2="1200" y2="300" stroke="#4cc9f0" stroke-width="1" />
+    <line x1="0" y1="400" x2="1200" y2="400" stroke="#4cc9f0" stroke-width="1" />
+    <line x1="0" y1="500" x2="1200" y2="500" stroke="#4cc9f0" stroke-width="1" />
+    
+    <line x1="100" y1="0" x2="100" y2="600" stroke="#4cc9f0" stroke-width="1" />
+    <line x1="300" y1="0" x2="300" y2="600" stroke="#4cc9f0" stroke-width="1" />
+    <line x1="500" y1="0" x2="500" y2="600" stroke="#4cc9f0" stroke-width="1" />
+    <line x1="700" y1="0" x2="700" y2="600" stroke="#4cc9f0" stroke-width="1" />
+    <line x1="900" y1="0" x2="900" y2="600" stroke="#4cc9f0" stroke-width="1" />
+    <line x1="1100" y1="0" x2="1100" y2="600" stroke="#4cc9f0" stroke-width="1" />
+  </g>
+  
+  <!-- Gaming Console -->
+  <g transform="translate(200, 200) scale(1.5)" class="glow">
+    <rect x="96" y="128" width="320" height="192" rx="16" class="dark" />
+    <rect x="112" y="144" width="288" height="160" rx="8" class="primary" />
+    <circle cx="160" cy="224" r="24" class="secondary" />
+    <circle cx="352" cy="224" r="24" class="secondary" />
+    <rect x="224" y="200" width="64" height="48" rx="8" class="accent" />
+    <rect x="144" y="304" width="32" height="80" rx="8" class="dark" />
+    <rect x="336" y="304" width="32" height="80" rx="8" class="dark" />
+    <rect x="144" y="368" width="224" height="16" rx="8" class="dark" />
+    <circle cx="160" cy="224" r="16" class="accent" />
+    <circle cx="352" cy="224" r="16" class="accent" />
+    <rect x="232" y="208" width="48" height="32" rx="4" class="secondary" />
+  </g>
+  
+  <!-- Gaming Headset -->
+  <g transform="translate(800, 250) scale(1.2)" class="glow">
+    <path d="M352 192c0-53.02-42.98-96-96-96s-96 42.98-96 96c0 8.84-7.16 16-16 16h-16v96h16c8.84 0 16 7.16 16 16 0 53.02 42.98 96 96 96s96-42.98 96-96c0-8.84 7.16-16 16-16h16v-96h-16c-8.84 0-16-7.16-16-16z" class="dark" />
+    <path d="M144 208h-16v64h16c8.84 0 16 7.16 16 16 0 53.02 42.98 96 96 96s96-42.98 96-96c0-8.84 7.16-16 16-16h16v-64h-16c-8.84 0-16-7.16-16-16 0-53.02-42.98-96-96-96s-96 42.98-96 96c0 8.84-7.16 16-16 16z" class="primary" />
+    <path d="M144 208h-8v64h8c8.84 0 16 7.16 16 16 0 53.02 42.98 96 96 96s96-42.98 96-96c0-8.84 7.16-16 16-16h8v-64h-8c-8.84 0-16-7.16-16-16 0-53.02-42.98-96-96-96s-96 42.98-96 96c0 8.84-7.16 16-16 16z" class="primary" />
+    <rect x="128" y="208" width="24" height="64" rx="8" class="secondary" />
+    <rect x="360" y="208" width="24" height="64" rx="8" class="secondary" />
+    <circle cx="208" cy="256" r="16" class="accent" />
+    <circle cx="304" cy="256" r="16" class="accent" />
+    <circle cx="208" cy="256" r="8" class="secondary" />
+    <circle cx="304" cy="256" r="8" class="secondary" />
+  </g>
+  
+  <!-- Particles -->
+  <g opacity="0.7">
+    <circle cx="100" cy="100" r="5" class="secondary" />
+    <circle cx="300" cy="150" r="3" class="accent" />
+    <circle cx="500" cy="400" r="4" class="primary" />
+    <circle cx="700" cy="200" r="6" class="secondary" />
+    <circle cx="900" cy="500" r="3" class="accent" />
+    <circle cx="1100" cy="300" r="5" class="primary" />
+    <circle cx="200" cy="450" r="4" class="secondary" />
+    <circle cx="400" cy="550" r="3" class="accent" />
+    <circle cx="600" cy="50" r="5" class="primary" />
+    <circle cx="800" cy="350" r="4" class="secondary" />
+    <circle cx="1000" cy="150" r="3" class="accent" />
+    <circle cx="150" cy="250" r="4" class="primary" />
+    <circle cx="350" cy="350" r="3" class="secondary" />
+    <circle cx="550" cy="450" r="5" class="accent" />
+    <circle cx="750" cy="550" r="4" class="primary" />
+    <circle cx="950" cy="50" r="3" class="secondary" />
+    <circle cx="1050" cy="250" r="5" class="accent" />
+  </g>
+</svg>

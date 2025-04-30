@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100" height="100">
+  <style>
+    .primary { fill: #7b2cbf; }
+    .secondary { fill: #4cc9f0; }
+    .accent { fill: #e0fbfc; }
+    .dark { fill: #0d1b2a; }
+  </style>
+  <circle cx="256" cy="256" r="160" class="dark" opacity="0.2" />
+  <!-- Headset -->
+  <path d="M352 192c0-53.02-42.98-96-96-96s-96 42.98-96 96c0 8.84-7.16 16-16 16h-16v96h16c8.84 0 16 7.16 16 16 0 53.02 42.98 96 96 96s96-42.98 96-96c0-8.84 7.16-16 16-16h16v-96h-16c-8.84 0-16-7.16-16-16z" class="dark" />
+  <path d="M144 208h-16v64h16c8.84 0 16 7.16 16 16 0 53.02 42.98 96 96 96s96-42.98 96-96c0-8.84 7.16-16 16-16h16v-64h-16c-8.84 0-16-7.16-16-16 0-53.02-42.98-96-96-96s-96 42.98-96 96c0 8.84-7.16 16-16 16z" class="primary" />
+  <path d="M144 208h-8v64h8c8.84 0 16 7.16 16 16 0 53.02 42.98 96 96 96s96-42.98 96-96c0-8.84 7.16-16 16-16h8v-64h-8c-8.84 0-16-7.16-16-16 0-53.02-42.98-96-96-96s-96 42.98-96 96c0 8.84-7.16 16-16 16z" class="primary" />
+  <rect x="128" y="208" width="24" height="64" rx="8" class="secondary" />
+  <rect x="360" y="208" width="24" height="64" rx="8" class="secondary" />
+  <circle cx="208" cy="256" r="16" class="accent" />
+  <circle cx="304" cy="256" r="16" class="accent" />
+  <!-- Controller Button -->
+  <circle cx="208" cy="256" r="8" class="secondary" />
+  <circle cx="304" cy="256" r="8" class="secondary" />
+</svg>

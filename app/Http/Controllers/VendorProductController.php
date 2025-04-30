@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
 
 class VendorProductController extends Controller
 {
     public function index()
     {
-        $products = Product::where('vendor_id', Auth::id())->get();
+        $products = Product::where('vendor_id', Auth::id())->with('category')->get();
         return view('vendor.products.index', compact('products'));
     }
 
     public function create()
     {
-        return view('vendor.products.create');
+        $categories = Category::all();
+        return view('vendor.products.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -25,7 +27,8 @@ class VendorProductController extends Controller
             'qty' => 'required|numeric',
             'description' => 'nullable',
             'price' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         if ($request->hasFile('image')) {
@@ -34,6 +37,7 @@ class VendorProductController extends Controller
         }
 
         $data['vendor_id'] = Auth::id(); // Associate product with vendor
+        $data['category_id'] = $request->input('category_id');
 
         Product::create($data);
 
@@ -45,8 +49,8 @@ class VendorProductController extends Controller
         if ($product->vendor_id !== Auth::id()) {
             return redirect()->back()->with('error', 'Unauthorized');
         }
-
-        return view('vendor.products.edit', compact('product'));
+        $categories = Category::all();
+        return view('vendor.products.edit', compact('product', 'categories'));
     }
 
     public function update(Request $request, Product $product)
@@ -60,14 +64,15 @@ class VendorProductController extends Controller
             'qty' => 'required|numeric',
             'description' => 'nullable',
             'price' => 'required|numeric',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            'category_id' => 'required|exists:categories,id'
         ]);
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'public');
             $data['image'] = $imagePath;
         }
-
+        $data['category_id'] = $request->input('category_id');
         $product->update($data);
 
         return redirect()->route('vendor.products.index')->with('success', 'Product Updated Successfully');

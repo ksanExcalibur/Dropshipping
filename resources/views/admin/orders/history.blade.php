@@ -27,7 +27,7 @@
                 <td>{{ $order->qty }}</td>
                 <td>{{ number_format($order->price, 2) }}</td>
                 <td>
-                    <span class="badge
+                    <span class=" badge-dark
                         @if($order->status == 'pending') badge-warning
                         @elseif($order->status == 'paid') badge-success
                         @else badge-secondary @endif">

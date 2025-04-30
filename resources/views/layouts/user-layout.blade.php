@@ -56,11 +56,13 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <div class="sidebar-heading">User Panel</div>
-      <a href="{{ route('user.dashboard') }}"><i class="fas fa-user me-2"></i> Profile</a>
-      <a href="{{ route('user.orders') }}"><i class="fas fa-shopping-bag me-2"></i> My Orders</a>
-      <a href="{{ route('payment.success') }}"><i class="fas fa-money-bill me-2"></i> Payment</a>
-      <a href="{{ route('logout') }}" class="logout-btn"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
+    <div class="sidebar-heading">User Panel</div>
+    <a href="{{ route('home') }}"><i class="fas fa-home me-2"></i> Home</a>
+    <a href="{{ route('user.dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+    <a href="{{ route('profile.edit') }}"><i class="fas fa-user me-2"></i> Profile</a>
+    <a href="{{ route('user.orders') }}"><i class="fas fa-shopping-bag me-2"></i> My Orders</a>
+    
+    <a href="{{ route('logout') }}" class="logout-btn"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
     </div>
 
     <!-- Main Content -->

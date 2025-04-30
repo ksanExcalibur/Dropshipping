@@ -44,7 +44,7 @@
       }
       .main-content {
         margin-left: 220px;
-        padding: 30px;
+        padding: 40px;
       }
       .logout-btn {
         position: absolute;
@@ -55,19 +55,22 @@
   </head>
   <body>
 
-    <!-- Sidebar -->
+
+  
     <div class="sidebar">
       <div class="sidebar-heading">Vendor Panel</div>
-      <a href="{{ route('vendor.dashboard') }}"><i class="fas fa-home me-2"></i> Dashboard</a>
+      <a href="{{ route('home') }}"><i class="fas fa-home me-2"></i> Home</a>
+      <a href="{{ route('vendor.dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
       <a href="{{ route('vendor.products.index') }}"><i class="fas fa-boxes me-2"></i> Manage Products</a>
       <a href="{{ route('vendor.orders.list') }}"><i class="fas fa-shopping-cart me-2"></i> Orders</a>
+      <a href="{{ route('profile.edit') }}"><i class="fas fa-user me-2"></i> Profile</a>
       <a href="{{ route('logout') }}" class="logout-btn"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
     </div>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <main class="container main-content">
       @yield('content')
-    </div>
+    </main>
 
     <!-- Bootstrap Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

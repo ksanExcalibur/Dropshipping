@@ -1,0 +1,291 @@
+/* Product Details Page Styles */
+.product-details-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.product-image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.product-info {
+    margin-top: 20px;
+}
+
+.product-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 20px;
+    color: #e63946;
+    margin-bottom: 15px;
+}
+
+.product-description {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.add-to-cart-btn {
+    background-color: #457b9d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #1d3557;
+}
+
+.comments-section {
+    margin-top: 40px;
+}
+.comments-card-section {
+    background: #f9f9fb;
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    padding: 32px 24px 24px 24px;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.comment-form-card {
+    background: #111;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    padding: 24px 20px 18px 20px;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    color: #f5f5f5;
+}
+.modern-comment-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.stylish-textarea {
+    width: 100%;
+    min-height: 80px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    font-size: 1.08em;
+    resize: vertical;
+    background: #f7f7fa;
+    transition: border 0.2s;
+}
+.stylish-textarea:focus {
+    border: 1.5px solid #457b9d;
+    outline: none;
+    background: #fff;
+}
+.star-rating-input {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+.star-input {
+    font-size: 1.6em;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.15s, text-shadow 0.15s;
+    user-select: none;
+}
+.star-input.filled {
+    color: #ffd700;
+    text-shadow: 0 1px 2px #e6c200;
+}
+.rating-label {
+    margin-left: 10px;
+    color: #888;
+    font-size: 1em;
+}
+@media (max-width: 900px) {
+    .comments-card-section {
+        padding: 16px 6px 12px 6px;
+        gap: 20px;
+    }
+    .comment-form-card {
+        padding: 14px 8px 12px 8px;
+    }
+}
+.comment-card {
+    background: #111;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    padding: 18px 16px 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #f5f5f5;
+}
+.modern-comment-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.stylish-textarea {
+    width: 100%;
+    min-height: 80px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    font-size: 1.08em;
+    resize: vertical;
+    background: #f7f7fa;
+    transition: border 0.2s;
+}
+.stylish-textarea:focus {
+    border: 1.5px solid #457b9d;
+    outline: none;
+    background: #fff;
+}
+.star-rating-input {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+.star-input {
+    font-size: 1.6em;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.15s, text-shadow 0.15s;
+    user-select: none;
+}
+.star-input.filled {
+    color: #ffd700;
+    text-shadow: 0 1px 2px #e6c200;
+}
+.rating-label {
+    margin-left: 10px;
+    color: #888;
+    font-size: 1em;
+}
+@media (max-width: 900px) {
+    .comments-card-section {
+        padding: 16px 6px 12px 6px;
+        gap: 20px;
+    }
+    .comment-form-card {
+        padding: 14px 8px 12px 8px;
+    }
+}
+.comment-card {
+    background: #111;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    padding: 24px 20px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: box-shadow 0.2s;
+}
+.comment-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.13);
+}
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+.comment-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #f3f3f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.comment-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.comment-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.comment-user-info strong {
+    font-size: 1.1em;
+    color: #fff;
+}
+.comment-user-info small {
+    color: #bbb;
+    font-size: 0.95em;
+}
+.comment-body {
+    margin-left: 64px;
+    margin-top: 0;
+}
+.comment-body p {
+    margin-bottom: 8px;
+    color: #f5f5f5;
+    font-size: 1.08em;
+}
+.comment-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+}
+.star {
+    font-size: 1.2em;
+    color: #ffd700;
+    margin-right: 1px;
+    text-shadow: 0 1px 2px #222;
+}
+.star.filled {
+    color: #ffd700;
+    text-shadow: 0 1px 2px #e6c200;
+}
+.rating-value {
+    margin-left: 6px;
+    color: #bbb;
+    font-size: 0.98em;
+}
+@media (max-width: 600px) {
+    .comment-card {
+        padding: 14px 8px 12px 8px;
+    }
+    .comment-avatar {
+        width: 36px;
+        height: 36px;
+    }
+    .comment-body {
+        margin-left: 48px;
+    }
+}
+.product-image img {
+    width: 100%;
+    height: auto;
+    max-width: 350px;
+    max-height: 500px;
+    object-fit: cover;
+}

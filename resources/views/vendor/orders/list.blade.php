@@ -5,6 +5,13 @@
 @section('content')
 <div class="container mt-4">
     <h1>Your Orders</h1>
+
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @elseif(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+
     @if($orders->isEmpty())
         <p>No orders found.</p>
     @else
@@ -28,17 +35,38 @@
                         <td>{{ $order->product_name ?? 'No Product' }}</td>
                         <td>{{ $order->qty }}</td>
                         <td>{{ number_format($order->price, 2) }}</td>
-                        
                         <td>
-                            <span class="badge
-                                @if($order->status == 'pending') bg-warning
-                                @elseif($order->status == 'paid') bg-success
-                                @else bg-secondary @endif">
-                                {{ ucfirst($order->status) }}
+                            @php
+                                $statusClasses = [
+                                    'pending' => 'bg-warning',
+                                    'paid_pending_vendor' => 'bg-info',
+                                    'paid_confirmed' => 'bg-success',
+                                    'cancelled_by_user' => 'bg-danger',
+                                    'cancelled_by_vendor' => 'bg-secondary',
+                                ];
+                                $statusLabel = ucwords(str_replace('_', ' ', $order->status));
+                            @endphp
+                            <span class="badge {{ $statusClasses[$order->status] ?? 'bg-secondary' }}">
+                                {{ $statusLabel }}
                             </span>
                         </td>
                         <td>
-                            <a href="{{ route('orders.receipt', $order->id) }}" class="btn btn-primary btn-sm">View Receipt</a>
+                            <a href="{{ route('orders.receipt', $order->id) }}" class="btn btn-primary btn-sm mb-1">View Receipt</a>
+
+                            @if($order->status == 'paid_pending_vendor' && Auth::user()->isVendor())
+                                <!-- Show Confirm and Cancel buttons for vendors with paid_pending_vendor orders -->
+                                <form action="{{ route('vendor.orders.confirm', $order->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success btn-sm">Confirm Order</button>
+                                </form>
+
+                                <form action="{{ route('vendor.orders.cancel', $order->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger btn-sm">Cancel Order</button>
+                                </form>
+                            @elseif($order->status == 'paid_confirmed')
+                                <span class="text-success">Confirmed</span>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -47,15 +75,3 @@
     @endif
 </div>
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-  

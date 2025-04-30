@@ -6,50 +6,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <body>
-    <!-- Hero Section --> 
-    <section class="banner">
-        <div id="shopCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="/images/top2.jpg" class="d-block w-100" alt="Hero Image 1">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h1>Welcome to Our Shop</h1>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="/images/fashionicon.png" class="d-block w-100" alt="fashion">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h1>Discover Our Collection</h1>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img src="/images/accessories.png" class="d-block w-100" alt="accessories">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h1>Exclusive Offers</h1>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#shopCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#shopCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </section>
-
+  
     <div class="container">
         <h2 class="text-center">All Products</h2>
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <form method="GET" action="">
+                    <div class="form-group">
+                        <label for="category">Filter by Category:</label>
+                        <select name="category" id="category" class="form-control" onchange="this.form.submit()">
+                            <option value="">All Categories</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
         <div class="product-grid">
-            @foreach($products as $product)
-                <div class="product">
-                    @if($product->image)
-                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}">
-                    @else
-                        <img src="/images/default.png" alt="Default Image">
-                    @endif
+            @if($products->isEmpty())
+                <div class="alert alert-info text-center">
+                    No products found matching your search criteria.
+                </div>
+            @else
+                @foreach($products as $product)
+                    <div class="product">
+                        @if($product->image)
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" style="max-width: 100%; height: 200px; object-fit: contain;">
+                        @else
+                            <img src="/images/default.png" alt="Default Image" style="max-width: 100%; height: 200px; object-fit: contain;">
+                        @endif
                     @if($product->is_best_seller)
                         <span class="best-seller">Best-seller</span>
                     @elseif($product->is_new)
@@ -57,9 +45,11 @@
                     @endif
                     <h3>{{ $product->name }}</h3>
                     <p class="price">Rs{{ $product->price }} <span class="old-price">${{ $product->old_price }}</span></p>
+                    <p class="category">Category: {{ $product->category ? $product->category->name : 'Uncategorized' }}</p>
                     <a href="{{ route('product.show', ['id' => $product->id]) }}" class="btn">View Details</a>
-                </div>
-            @endforeach
+                    </div>
+                @endforeach
+            @endif
         </div>
 
         <div class="pagination" role="navigation" aria-label="Product pagination">

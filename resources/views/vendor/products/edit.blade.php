@@ -38,6 +38,19 @@
             <textarea name="description" class="form-control">{{ $product->description }}</textarea>
         </div>
 
+        <!-- Category Dropdown -->
+        <div class="mb-3">
+            <label>Category:</label>
+            <select name="category_id" class="form-control" required>
+                <option value="">Select Category</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         <div class="mb-3">
             <label>Image:</label>
             @if($product->image)

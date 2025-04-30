@@ -1,0 +1,45 @@
+/* Vendor Dashboard Styles */
+body {
+  background-color: #f4f6f9;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.sidebar {
+  height: 100vh;
+  background-color: #1e1e2f;
+  color: #fff;
+  position: fixed;
+  width: 220px;
+  padding-top: 20px;
+}
+
+.sidebar a {
+  color: #cfd8dc;
+  text-decoration: none;
+  display: block;
+  padding: 15px 20px;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #343a40;
+  color: #fff;
+}
+
+.sidebar .sidebar-heading {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.4rem;
+  color: #f8f9fa;
+}
+
+.main-content {
+  margin-left: 220px;
+  padding: 40px;
+}
+
+.logout-btn {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+}

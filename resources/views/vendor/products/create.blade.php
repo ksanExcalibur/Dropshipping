@@ -36,6 +36,17 @@
             <textarea name="description" class="form-control"></textarea>
         </div>
 
+        <!-- Category Dropdown -->
+        <div class="mb-3">
+            <label>Category:</label>
+            <select name="category_id" class="form-control" required>
+                <option value="">Select Category</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <div class="mb-3">
             <label>Image:</label>
             <input type="file" name="image" class="form-control">

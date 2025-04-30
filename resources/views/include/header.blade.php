@@ -13,6 +13,16 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Search Form -->
+      <form action="{{ route('shop') }}" method="GET" class="search-form d-flex me-3">
+        <div class="search-wrapper">
+          <input type="text" name="search" class="search-input" placeholder="Search products..." value="{{ request('search') }}">
+          <button class="search-button" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </form>
+
       <!-- Left Links -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
@@ -24,9 +34,11 @@
         <li class="nav-item">
           <a class="nav-link {{ Request::routeIs('story') ? 'active' : '' }}" href="{{ route('story') }}">Story</a>
         </li>
-        <li class="nav-item">
+         <li class="nav-item">
           <a class="nav-link {{ Request::routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact</a>
         </li>
+      
+        
       </ul>
 
       <!-- Right Links -->
@@ -37,6 +49,47 @@
             <span class="badge bg-danger">{{ Cart::where('user_id', Auth::id())->count() }}</span>
           </a>
         </li>
+
+<!-- Chat Button -->
+<li class="nav-item">
+  <a class="btn btn-outline-light ms-3" href="{{ route('chat.index') }}">
+    <i class="bi bi-chat-dots"></i> Chat
+  </a>
+</li>
+
+@auth
+    <!-- Notifications Dropdown -->
+    <li class="nav-item dropdown ms-3">
+        <a class="nav-link dropdown-toggle d-flex align-items-center position-relative" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
+            <i class="bi bi-bell fs-4"></i>
+            @if (auth()->user()->unreadNotifications->count())
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{ auth()->user()->unreadNotifications->count() }}
+                </span>
+            @endif
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown" style="width: 300px;">
+            <li class="dropdown-header">Notifications</li>
+            @forelse (auth()->user()->unreadNotifications->take(5) as $notification)
+                <li>
+                    <a class="dropdown-item small" href="{{ route('notifications.read', $notification->id) }}">
+                        {{ $notification->data['message'] ?? 'New notification' }}
+                    </a>
+                </li>
+            @empty
+                <li>
+                    <span class="dropdown-item text-muted small">No new notifications</span>
+                </li>
+            @endforelse
+            <li><hr class="dropdown-divider"></li>
+            <li>
+                <a class="dropdown-item text-center" href="{{ route('notifications.index') }}">View All</a>
+            </li>
+        </ul>
+    </li>
+@endauth
+
+
 
         @auth
           <!-- Profile Dropdown -->
@@ -80,8 +133,12 @@
 
 <!-- Styles -->
 <style>
+  body {
+      padding-top: 100px;
+  }
   .navbar {
     padding: 0.5rem 1rem;
+    z-index: 1030;
   }
   .navbar-brand img {
     height: 40px;
@@ -95,6 +152,48 @@
     color: #007bff;
   }
   .navbar-nav .nav-link:hover {
+    color: #007bff;
+  }
+  .search-form {
+    flex-grow: 1;
+    max-width: 500px;
+  }
+  .search-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .search-input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    transition: all 0.3s ease;
+  }
+  .search-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .search-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+  }
+  .search-button {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .search-button:hover {
     color: #007bff;
   }
   .btn-outline-light {
@@ -116,3 +215,4 @@
 
 <!-- Bootstrap Icons CDN (if not already included) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+

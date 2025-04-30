@@ -20,10 +20,26 @@ class ProductController extends Controller
 
     public function userindex()
     {
-        $products = Product::all();
-        return view('userpage.shop', compact('products'));
+        $search = request('search');
+        $categoryId = request('category');
+        $query = Product::query();
+        
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('description', 'like', '%' . $search . '%');
+            });
+        }
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+        }
+        $products = $query->get();
+        $categories = \App\Models\Category::all();
+        return view('userpage.shop', compact('products', 'categories'));
     }
 
+
+    
     public function commentindex() {
         $topRatedProducts = Product::with('comments')
             ->whereHas('comments', function ($query) {
@@ -99,31 +115,35 @@ class ProductController extends Controller
     public function home()
     {
         $products = Product::all();
-        $topRatedProducts = Product::with('comments')
-            ->whereHas('comments', function ($query) {
-                $query->whereNotNull('rating'); // Ensure products have ratings
-            })
-            ->get()
-            ->sortByDesc(function ($product) {
-                return $product->averageRating();
-            })
-            ->take(5); // Get top 5 rated products
-
+        
+        $topRatedProducts = Product::with(['comments' => function($query) {
+                $query->whereNotNull('rating');
+            }])
+            ->withAvg('comments as average_rating', 'rating')
+            ->having('average_rating', '>=', 4)
+            ->orderByDesc('average_rating')
+            ->take(5)
+            ->get();
+    
         return view('userpage.home', compact('products', 'topRatedProducts'));
     }
 
     // Add to Cart
     public function addToCart(Request $request, $id)
-    {
-        $product = Product::findOrFail($id);
-
-        $cart = Cart::updateOrCreate(
-            ['user_id' => Auth::id(), 'product_id' => $product->id],
-            ['quantity' => \DB::raw('quantity + 1')]
-        );
-
-        return redirect()->back()->with('success', 'Product added to cart successfully');
+{
+    if (!Auth::check()) {
+        return redirect()->route('login')->with('error', 'You must be logged in to add products to your cart.');
     }
+
+    $product = Product::findOrFail($id);
+
+    $cart = Cart::updateOrCreate(
+        ['user_id' => Auth::id(), 'product_id' => $product->id],
+        ['quantity' => \DB::raw('quantity + 1')]
+    );
+
+    return redirect()->back()->with('success', 'Product added to cart successfully');
+}
 
     // View Cart
     public function viewCart()

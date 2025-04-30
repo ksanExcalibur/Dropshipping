@@ -11,13 +11,18 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'qty', 'description', 'price', 'image','vendor_id', 
+        'name', 'qty', 'description', 'price', 'image','vendor_id', 'category_id'
     ];
 
     // Define the comments relationship
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+    
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
     
     

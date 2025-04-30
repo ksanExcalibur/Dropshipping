@@ -22,4 +22,15 @@ class Order extends Model
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
+    public function isPaid()
+{
+    return in_array($this->status, ['paid', 'paid_pending_vendor']);
+}
+// In Order Model
+public function vendor()
+{
+    return $this->belongsTo(Vendor::class, 'vendor_id');
+}
+
+
 }

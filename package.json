@@ -3,7 +3,8 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+    "preview": "vite preview --port 8000"
     },
     "devDependencies": {
         "axios": "^1.6.4",
@@ -11,6 +12,8 @@
         "vite": "^5.0.0"
     },
     "dependencies": {
-        "bootstrap": "^5.3.3"
+        "bootstrap": "^5.3.3",
+        "laravel-echo": "^2.0.2",
+        "pusher-js": "^8.4.0"
     }
 }

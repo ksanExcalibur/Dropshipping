@@ -15,6 +15,8 @@
             <a href="{{ route('vendor.orders.list') }}" class="btn btn-secondary">
                 <i class="fas fa-shopping-cart"></i> View Orders
             </a>
+           
+            </a>
         </div>
     </div>
 

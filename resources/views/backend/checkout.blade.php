@@ -4,7 +4,7 @@
 @section('content')
 <div class="container mt-4">
     <div class="text-center mb-4">
-        <img src="/images/hero.png" alt="Checkout Banner" class="img-fluid" style="max-width: 100%; height: auto;">
+        <img src="/images/banner.png" alt="Checkout Banner" class="img-fluid" style="max-width: 100%; height: auto;">
     </div>
     <h2 class="mb-4 text-center">Checkout</h2>
     <form action="{{ route('checkout.post') }}" method="POST" class="needs-validation" novalidate>
